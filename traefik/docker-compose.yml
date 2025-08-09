@@ -49,7 +49,7 @@ services:
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
       - "traefik.http.routers.dashboard.entrypoints=https"
       # admin / traefik, please change!
-      - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:\$2a\$12\$ktgZsFQZ0S1FeQbI1JjS9u36fAJMHDQaY6LNi9EkEp8sKtP5BK43C"
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$2a$$12$$ktgZsFQZ0S1FeQbI1JjS9u36fAJMHDQaY6LNi9EkEp8sKtP5BK43C"
 
       # default catch-all router
       - "traefik.http.routers.default.rule=HostRegexp(`.+`)"
