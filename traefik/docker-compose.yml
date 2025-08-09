@@ -44,7 +44,7 @@ services:
       - "traefik.http.middlewares.default-ipallowlist-RFC1918.ipallowlist.sourcerange=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
       # example on how to secure the traefik dashboard and api
-      - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_FQDN}`)"
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.drogaprogramisty.site`)"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
       - "traefik.http.routers.dashboard.entrypoints=https"
@@ -68,8 +68,8 @@ services:
       - "traefik.http.services.default-http.loadbalancer.passhostheader=true"
     environment:
       TZ: "Europe/Warsaw"
-      PORKBUN_API_KEY: "${PORKBUN_API_KEY}"
-      PORKBUN_SECRET_API_KEY: "${PORKBUN_SECRET_API_KEY}"
+#      PORKBUN_API_KEY: "${PORKBUN_API_KEY}"
+#      PORKBUN_SECRET_API_KEY: "${PORKBUN_SECRET_API_KEY}"
     command:
       # ping is needed for the health check to work!
       - "--ping=true"
@@ -95,11 +95,14 @@ services:
       - "--experimental.plugins.rewriteResponseHeaders.version=v1.1.2"
       - "--experimental.plugins.geoblock.moduleName=github.com/PascalMinder/geoblock"
       - "--experimental.plugins.geoblock.version=v0.3.3"
-      # let's encrypt example for porkbun DNS challenge
-      - "--certificatesResolvers.porkbun.acme.storage=/traefik/var/porkbun.json"
-      - "--certificatesResolvers.porkbun.acme.dnsChallenge.provider=porkbun"
-      - "--certificatesResolvers.porkbun.acme.dnsChallenge.delayBeforeCheck=30"
-      - "--entrypoints.https.http.tls.certresolver=porkbun"
+#       let's encrypt example for porkbun DNS challenge
+#      - "--certificatesResolvers.porkbun.acme.storage=/traefik/var/porkbun.json"
+#      - "--certificatesResolvers.porkbun.acme.dnsChallenge.provider=porkbun"
+#      - "--certificatesResolvers.porkbun.acme.dnsChallenge.delayBeforeCheck=30"
+#      - "--entrypoints.https.http.tls.certresolver=porkbun"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.https.http.tls.domains[0].main=${DOMAIN0}"
       - "--entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN0}"
     ports:
@@ -127,24 +130,6 @@ services:
       - "traefik.http.services.default-errors.loadbalancer.server.port=8080"
     environment:
       TZ: "Europe/Warsaw"
-    networks:
-      backend:
-    restart: "always"
-
-  # example container
-  nginx:
-    image: "11notes/nginx:stable"
-    <<: *lockdown
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nginx-example.rule=Host(`${NGINX_FQDN}`)"
-      - "traefik.http.routers.nginx-example.entrypoints=https"
-      - "traefik.http.routers.nginx-example.service=nginx-example"
-      - "traefik.http.services.nginx-example.loadbalancer.server.port=3000"
-    tmpfs:
-      # needed for read_only: true
-      - "/nginx/cache:uid=1000,gid=1000"
-      - "/nginx/run:uid=1000,gid=1000"
     networks:
       backend:
     restart: "always"
