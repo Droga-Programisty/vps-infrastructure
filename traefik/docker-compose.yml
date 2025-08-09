@@ -89,6 +89,7 @@ services:
       - "--entrypoints.https.address=:443"
       - "--entrypoints.https.http.tls=true"
       - "--entrypoints.https.http.middlewares=default-errors,default-ratelimit,default-ipallowlist-RFC1918,default-csp"
+      - "--entrypoints.websecure.address=:443"
       # disable upstream HTTPS certificate checks (https > https)
       - "--serversTransport.insecureSkipVerify=true"
       - "--experimental.plugins.rewriteResponseHeaders.moduleName=github.com/jamesmcroft/traefik-plugin-rewrite-response-headers"
@@ -108,9 +109,11 @@ services:
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
+      - "8080:8080/tcp"
     volumes:
       - "var:/traefik/var"
       - "plugins:/traefik/plugins"
+      - "letsencrypt:/letsencrypt"
       # access docker socket via proxy read-only
       - "socket-proxy.run:/var/run"
     networks:
