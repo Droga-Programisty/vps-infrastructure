@@ -32,5 +32,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} "
           cd /home/ubuntu/vps-infrastructure &&
           docker compose pull &&
-          TRAEFIK_FQDN=dashboard.drogaprogramisty.site docker compose up -d --remove-orphans
+          docker compose up -d --remove-orphans
           "
