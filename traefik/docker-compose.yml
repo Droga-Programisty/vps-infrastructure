@@ -103,8 +103,8 @@ services:
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--entrypoints.https.http.tls.domains[0].main=${DOMAIN0}"
-      - "--entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN0}"
+      - "--entrypoints.https.http.tls.domains[0].main=drogaprogramisty.site"
+      - "--entrypoints.https.http.tls.domains[0].sans=*.drogaprogramisty.site"
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
