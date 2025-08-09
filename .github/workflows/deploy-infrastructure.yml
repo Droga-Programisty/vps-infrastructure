@@ -1,0 +1,36 @@
+name: Deploy Docker Compose to Oracle VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Copy repository files to VPS
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "."
+          target: "/home/ubuntu/vps-infrastructure"
+
+      - name: Run docker-compose
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Oracle VPS via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} "
+          cd /home/ubuntu/vps-infrastructure &&
+          docker compose pull &&
+          docker-compose up -d --remove-orphans
+          "
