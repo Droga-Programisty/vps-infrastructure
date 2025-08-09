@@ -9,7 +9,7 @@ services:
     # you can check https://github.com/11notes/docker-socket-proxy for all details
     image: "11notes/socket-proxy:2.1.3"
     <<: *lockdown
-    user: "0:108"
+    user: "1001:1001"
     environment:
       TZ: "Europe/Warsaw"
     volumes:
