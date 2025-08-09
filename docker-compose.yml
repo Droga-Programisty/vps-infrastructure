@@ -1,0 +1,6 @@
+include:
+  - ./traefik/docker-compose.yml
+
+networks:
+  proxy:
+    external: true
