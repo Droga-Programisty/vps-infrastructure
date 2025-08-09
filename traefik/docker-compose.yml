@@ -138,6 +138,7 @@ services:
     restart: "always"
 
 volumes:
+  letsencrypt:
   var:
   plugins:
   socket-proxy.run:
