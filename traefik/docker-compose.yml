@@ -1,9 +1,7 @@
 name: "reverse-proxy"
 x-lockdown: &lockdown
-  # prevents write access to the image itself
-  read_only: true
-  # prevents any process within the container to gain more privileges
-  security_opt:
+  read_only: true # prevents write access to the image itself
+  security_opt: # prevents any process within the container to gain more privileges
     - "no-new-privileges=true"
 services:
   socket-proxy:
@@ -13,7 +11,7 @@ services:
     <<: *lockdown
     user: "0:108"
     environment:
-      TZ: "Europe/Zurich"
+      TZ: "Europe/Warsaw"
     volumes:
       - "/run/docker.sock:/run/docker.sock:ro"
       - "socket-proxy.run:/run/proxy"
@@ -69,7 +67,7 @@ services:
       - "traefik.http.routers.default-http.service=default-http"
       - "traefik.http.services.default-http.loadbalancer.passhostheader=true"
     environment:
-      TZ: "Europe/Zurich"
+      TZ: "Europe/Warsaw"
       PORKBUN_API_KEY: "${PORKBUN_API_KEY}"
       PORKBUN_SECRET_API_KEY: "${PORKBUN_SECRET_API_KEY}"
     command:
@@ -128,7 +126,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.default-errors.loadbalancer.server.port=8080"
     environment:
-      TZ: "Europe/Zurich"
+      TZ: "Europe/Warsaw"
     networks:
       backend:
     restart: "always"
