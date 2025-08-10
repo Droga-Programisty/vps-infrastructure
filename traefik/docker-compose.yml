@@ -95,14 +95,9 @@ services:
       - "--experimental.plugins.rewriteResponseHeaders.version=v1.1.2"
       - "--experimental.plugins.geoblock.moduleName=github.com/PascalMinder/geoblock"
       - "--experimental.plugins.geoblock.version=v0.3.3"
-#       let's encrypt example for porkbun DNS challenge
-#      - "--certificatesResolvers.porkbun.acme.storage=/traefik/var/porkbun.json"
-#      - "--certificatesResolvers.porkbun.acme.dnsChallenge.provider=porkbun"
-#      - "--certificatesResolvers.porkbun.acme.dnsChallenge.delayBeforeCheck=30"
-#      - "--entrypoints.https.http.tls.certresolver=porkbun"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/home/ubuntu/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.https.http.tls.domains[0].main=drogaprogramisty.site"
       - "--entrypoints.https.http.tls.domains[0].sans=*.drogaprogramisty.site"
     ports:
