@@ -102,7 +102,7 @@ services:
 #      - "--entrypoints.https.http.tls.certresolver=porkbun"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.storage=/home/ubuntu/letsencrypt/acme.json"
       - "--entrypoints.https.http.tls.domains[0].main=drogaprogramisty.site"
       - "--entrypoints.https.http.tls.domains[0].sans=*.drogaprogramisty.site"
     ports:
