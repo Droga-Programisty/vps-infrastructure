@@ -89,7 +89,6 @@ services:
       - "--entrypoints.https.address=:443"
       - "--entrypoints.https.http.tls=true"
       - "--entrypoints.https.http.middlewares=default-errors,default-ratelimit,default-ipallowlist-RFC1918,default-csp"
-      - "--entrypoints.websecure.address=:443"
       # disable upstream HTTPS certificate checks (https > https)
       - "--serversTransport.insecureSkipVerify=true"
       - "--experimental.plugins.rewriteResponseHeaders.moduleName=github.com/jamesmcroft/traefik-plugin-rewrite-response-headers"
