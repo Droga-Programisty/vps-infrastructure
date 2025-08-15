@@ -19,6 +19,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--api.dashboard=true"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.hello-world-router.rule=Host(`api.drogaprogramisty.site`)"
@@ -26,6 +27,14 @@ services:
       - "traefik.http.routers.hello-world-router.service=hello-world-service"
       - "traefik.http.routers.hello-world-router.tls.certResolver=my-resolver"
       - "traefik.http.services.hello-world-service.loadbalancer.server.url=http://host.docker.internal:3000"
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.drogaprogramisty.site`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth"
+      - "traefik.http.routers.dashboard.tls.certResolver=my-resolver"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      # admin / traefik, please change!
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$2a$$12$$ktgZsFQZ0S1FeQbI1JjS9u36fAJMHDQaY6LNi9EkEp8sKtP5BK43C"
+
     extra_hosts:
       - "host.docker.internal:host-gateway"
 volumes:
