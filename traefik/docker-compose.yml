@@ -9,22 +9,20 @@ services:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.my-resolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.my-resolver.acme.email=drogaprogramisty@gmail.com"
+      - "--certificatesresolvers.my-resolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.hello-world-app.rule=Host(`api.drogaprogramisty.site`)"
-      - "traefik.http.routers.hello-world-app.entrypoints=websecure"
-      - "traefik.http.routers.hello-world-app.service=hello-world-app"
-      - "traefik.http.routers.hello-world-app.tls.certResolver=myresolver"
-      - "traefik.http.services.hello-world-app.loadbalancer.server.url=http://host.docker.internal:3000"
+      - "traefik.http.routers.hello-world-router.rule=Host(`api.drogaprogramisty.site`)"
+      - "traefik.http.routers.hello-world-router.entrypoints=websecure"
+      - "traefik.http.routers.hello-world-router.service=hello-world-service"
+      - "traefik.http.routers.hello-world-router.tls.certResolver=my-resolver"
+      - "traefik.http.services.hello-world-service.loadbalancer.server.url=http://host.docker.internal:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
 volumes:
