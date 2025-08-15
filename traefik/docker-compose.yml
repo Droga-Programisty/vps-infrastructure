@@ -9,8 +9,9 @@ services:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
-#      - "--providers.docker=true"
-#      - "--providers.docker.exposedbydefault=false"
+      # todo - if I want to use labels-based configuration, I must use providers.docker=true, but if I have not-dockerised app, I could fall back to file-based configuration instead.
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.my-resolver.acme.tlschallenge=true"
       - "--certificatesresolvers.my-resolver.acme.email=drogaprogramisty@gmail.com"
