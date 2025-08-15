@@ -24,7 +24,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.hello-world-app.rule=Host(`api.drogaprogramisty.site`)"
       - "traefik.http.routers.hello-world-app.entrypoints=websecure"
-      - "traefik.http.routers.hello-world-app.service=hello-world-app-service"
+      - "traefik.http.routers.hello-world-app.service=hello-world-app"
       - "traefik.http.routers.hello-world-app.tls.certResolver=myresolver"
       - "traefik.http.services.hello-world-app.loadbalancer.server.url=http://host.docker.internal:3000"
     extra_hosts:
