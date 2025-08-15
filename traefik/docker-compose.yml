@@ -5,15 +5,12 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
-      - "--api.insecure=true"  # Only for dev!
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--api.dashboard=true"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drogaprogramisty@gmail.com"
